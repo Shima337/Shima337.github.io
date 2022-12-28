@@ -70,7 +70,7 @@ video.addEventListener("play", async () => {
   const labeledFaceDescriptors = await loadLabeledImages();
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
   const canvas = faceapi.createCanvasFromMedia(video);
-  document.body.append(canvas);
+  //document.body.append(canvas);
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);
   setInterval(async () => {
@@ -92,6 +92,9 @@ video.addEventListener("play", async () => {
     ) {
       happySec += 1;
       console.log("shimaaa is happy", happySec);
+      document.getElementById(
+        "message"
+      ).innerHTML = `Shima is happy ${happySec}`;
     } else {
       happySec = 0;
     }
@@ -104,9 +107,5 @@ video.addEventListener("play", async () => {
       src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1">
       </iframe>`;
     }
-    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-    faceapi.draw.drawDetections(canvas, resizedDetections);
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
   }, 500);
 });
