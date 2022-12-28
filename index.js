@@ -71,6 +71,7 @@ video.addEventListener("play", async () => {
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
   const canvas = faceapi.createCanvasFromMedia(video);
   document.body.append(canvas);
+  console.log(video.width);
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);
   setInterval(async () => {
