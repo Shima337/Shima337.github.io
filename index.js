@@ -4,6 +4,7 @@ let happySec = 0;
 const Photos = [];
 let isPlays = false;
 
+// hear we load models
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri("./models"),
   faceapi.nets.faceLandmark68Net.loadFromUri("./models"),
