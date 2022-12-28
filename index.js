@@ -2,7 +2,7 @@ const imageIolearn = document.getElementById("photos");
 const video = document.getElementById("video");
 let happySec = 0;
 const Photos = [];
-let isPlays = false;
+let isPlay = false;
 
 // hear we load models
 Promise.all([
@@ -25,7 +25,6 @@ async function upload() {
 }
 
 function loadLabeledImages() {
-  ``;
   const labels = ["shima"];
   return Promise.all(
     labels.map(async (label) => {
@@ -48,9 +47,21 @@ function loadLabeledImages() {
 }
 
 function startVideo() {
-  navigator.getUserMedia(
-    { video: {} },
-    (stream) => (video.srcObject = stream),
+  //   navigator.getUserMedia =
+  //     navigator.getUserMedia ||
+  //     navigator.webkitGetUserMedia ||
+  //     navigator.mozGetUserMedia ||
+  //     navigator.msGetUserMedia;
+  //   navigator.getUserMedia(
+  //     { video: {} },
+  //     (stream) => (video.srcObject = stream),
+  //     (err) => console.error(err)
+  //   );
+
+  navigator.mediaDevices.getUserMedia({ video: {} }).then(
+    (stream) => {
+      video.srcObject = stream;
+    },
     (err) => console.error(err)
   );
 }
@@ -72,9 +83,13 @@ video.addEventListener("play", async () => {
     const results = resizedDetections.map((d) =>
       faceMatcher.findBestMatch(d.descriptor)
     );
-    console.log("distance: ", results[0]._distance);
+    console.log("distance: ", results);
     console.log("happy :", detections[0].expressions.happy);
-    if (detections[0].expressions.happy > 0.5 && results[0]._distance > 0.2) {
+    if (
+      detections[0].expressions.happy > 0.5 &&
+      results[0]._label === "shima" &&
+      results[0]._distance > 0.2
+    ) {
       happySec += 1;
       console.log("shimaaa is happy", happySec);
     } else {
@@ -86,8 +101,8 @@ video.addEventListener("play", async () => {
       document.getElementById(
         "song"
       ).innerHTML = `<iframe width="420" height="315"
-  src="https://www.youtube.com/watch?v=hRuDDCx5s4U&t=2s?autoplay=1&mute=1">
-  </iframe>`;
+      src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1">
+      </iframe>`;
     }
     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
     faceapi.draw.drawDetections(canvas, resizedDetections);
