@@ -4,6 +4,12 @@ let happySec = 0;
 const Photos = [];
 let isPlay = false;
 
+video.style.width = document.width + "px";
+video.style.height = document.height + "px";
+video.setAttribute("autoplay", "");
+video.setAttribute("muted", "");
+video.setAttribute("playsinline", "");
+
 // hear we load models
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri("./models"),
