@@ -18,8 +18,11 @@ var constraints = {
   },
 };
 
-navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-  video.srcObject = stream;
-});
-
-document.body.appendChild(video);
+function append() {
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(function success(stream) {
+      video.srcObject = stream;
+    });
+  document.body.appendChild(video);
+}
